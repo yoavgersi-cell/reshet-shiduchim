@@ -1,0 +1,96 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  createdAt DateTime @default(now())
+
+  candidates Candidate[]
+  matches    Match[]
+  notes      Note[]
+}
+
+model Candidate {
+  id           String   @id @default(cuid())
+  userId       String
+  firstName    String
+  lastName     String
+  gender       Gender
+  age          Int
+  sector       Sector
+  background   String?  @db.Text
+  lookingFor   String?  @db.Text
+  privateNotes String?  @db.Text
+  phone        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  matches1 Match[] @relation("Candidate1")
+  matches2 Match[] @relation("Candidate2")
+  notes    Note[]
+}
+
+model Match {
+  id           String      @id @default(cuid())
+  userId       String
+  candidate1Id String
+  candidate2Id String
+  status       MatchStatus @default(SUGGESTED)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  candidate1 Candidate @relation("Candidate1", fields: [candidate1Id], references: [id])
+  candidate2 Candidate @relation("Candidate2", fields: [candidate2Id], references: [id])
+  notes      Note[]
+}
+
+model Note {
+  id          String     @id @default(cuid())
+  userId      String
+  entityType  EntityType
+  candidateId String?
+  matchId     String?
+  content     String     @db.Text
+  createdAt   DateTime   @default(now())
+
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  candidate Candidate? @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  match     Match?     @relation(fields: [matchId], references: [id], onDelete: Cascade)
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+enum Sector {
+  HAREDI
+  DATI
+  MASORTI
+  HILONI
+  OTHER
+}
+
+enum MatchStatus {
+  SUGGESTED
+  REVIEWING
+  APPROVED
+  DATING
+  CLOSED
+}
+
+enum EntityType {
+  CANDIDATE
+  MATCH
+}
