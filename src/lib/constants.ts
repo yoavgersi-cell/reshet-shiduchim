@@ -1,6 +1,6 @@
 export const SECTOR_LABELS: Record<string, string> = {
   HAREDI: "חרדי",
-  DATI: "דתי",
+  DATI: "דתי-לאומי",
   MASORTI: "מסורתי",
   HILONI: "חילוני",
   OTHER: "אחר",
@@ -9,6 +9,39 @@ export const SECTOR_LABELS: Record<string, string> = {
 export const GENDER_LABELS: Record<string, string> = {
   MALE: "גבר",
   FEMALE: "אישה",
+};
+
+export const ETHNICITY_LABELS: Record<string, string> = {
+  ASHKENAZI: "אשכנזי",
+  SEPHARDI: "ספרדי",
+  YEMENITE: "תימני",
+  MIZRAHI: "מזרחי",
+  OTHER: "אחר",
+};
+
+export const MARITAL_STATUS_LABELS: Record<string, string> = {
+  SINGLE: "רווק/ה",
+  DIVORCED: "גרוש/ה",
+  WIDOWED: "אלמן/ה",
+};
+
+export const KASHRUT_LABELS: Record<string, string> = {
+  MEHADRIN: "מהדרין",
+  HALAK: "חלק",
+  REGULAR: "רגיל",
+};
+
+export const HEAD_COVERING_LABELS: Record<string, string> = {
+  MITPACHAT: "מטפחת",
+  PEYAH: "פאה",
+  KOVA: "כובע",
+  NONE: "לא",
+};
+
+export const LEARNING_STATUS_LABELS: Record<string, string> = {
+  LEARNING: "לומד בכולל",
+  WORKING: "עובד",
+  BOTH: "לומד ועובד",
 };
 
 export const MATCH_STATUS_LABELS: Record<string, string> = {

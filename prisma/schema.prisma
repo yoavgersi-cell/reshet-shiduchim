@@ -20,19 +20,31 @@ model User {
 }
 
 model Candidate {
-  id           String   @id @default(cuid())
-  userId       String
-  firstName    String
-  lastName     String
-  gender       Gender
-  age          Int
-  sector       Sector
-  background   String?  @db.Text
-  lookingFor   String?  @db.Text
-  privateNotes String?  @db.Text
-  phone        String?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id              String         @id @default(cuid())
+  userId          String
+  firstName       String
+  lastName        String
+  gender          Gender
+  age             Int
+  height          Int?
+  city            String?
+  sector          Sector
+  ethnicity       Ethnicity?
+  maritalStatus   MaritalStatus  @default(SINGLE)
+  fatherName      String?
+  phone           String?
+  yeshivaOrSeminar String?
+  learningStatus  LearningStatus?
+  kashrut         Kashrut?
+  headCovering    HeadCovering?
+  smoking         Boolean?
+  parentalSupport String?
+  background      String?        @db.Text
+  lookingFor      String?        @db.Text
+  privateNotes    String?        @db.Text
+  photoUrl        String?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
 
   user     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   matches1 Match[] @relation("Candidate1")
@@ -80,6 +92,39 @@ enum Sector {
   MASORTI
   HILONI
   OTHER
+}
+
+enum Ethnicity {
+  ASHKENAZI
+  SEPHARDI
+  YEMENITE
+  MIZRAHI
+  OTHER
+}
+
+enum MaritalStatus {
+  SINGLE
+  DIVORCED
+  WIDOWED
+}
+
+enum Kashrut {
+  MEHADRIN
+  HALAK
+  REGULAR
+}
+
+enum HeadCovering {
+  MITPACHAT
+  PEYAH
+  KOVA
+  NONE
+}
+
+enum LearningStatus {
+  LEARNING
+  WORKING
+  BOTH
 }
 
 enum MatchStatus {
